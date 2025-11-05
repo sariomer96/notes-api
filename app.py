@@ -94,7 +94,7 @@ def json_error(err):
     msg = getattr(err, "description", str(err))
     return jsonify({"error": msg, "status": code}), code
 
-# ---------------- Health check ----------------
+
 @app.route("/healthz", methods=["GET"])
 def healthz():
     info: Dict[str, Any] = {
@@ -103,7 +103,7 @@ def healthz():
         "has_service_account": bool(cred_path),
     }
     try:
-        _ = db.collections()  # basit erişim testi
+        _ = db.collections()  
         info["firestore_ok"] = True
     except Exception as e:
         info["firestore_ok"] = False
@@ -238,7 +238,7 @@ def delete_task(task_id: int):
         abort(500, description=f"Firestore delete error: {e}")
     return ("", 204)
 
-# ---------------- Main ----------------
+
 if __name__ == "__main__":
-    # Gerekirse portu değiştir: port=8080
+    
     app.run(host="0.0.0.0", port=8000, debug=True)
